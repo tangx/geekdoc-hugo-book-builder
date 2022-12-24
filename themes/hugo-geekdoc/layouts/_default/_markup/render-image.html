@@ -11,12 +11,15 @@
 {{- $rel_url := $site_url | relURL}}
 
 <!-- 2. 去除 prefix， 并添加 **没有域名的 BaseURL ** -->
+{{ if and (isset .Page.Site.Params "static_prefix") }}
+{{ $prefix := .Page.Site.Params.static_prefix.name }}
 <!-- img_destination = /prefix/static/image.png -->
-{{ if (hasPrefix $img_destination "/docs" )}}
+{{ if (hasPrefix $img_destination $prefix )}}
 <!-- img_destination = /static/image.png -->
-{{ $img_destination = (strings.TrimPrefix "/docs" $img_destination ) }}
+{{ $img_destination = (strings.TrimPrefix $prefix $img_destination ) }}
 <!-- img_destination = /path/to/static/image.png -->
 {{ $img_destination = (print (path.Join $rel_url $img_destination))}}
+{{ end }}
 {{ end }}
 
 <!-- 3. 计算文件绝对路径 -->
@@ -40,10 +43,13 @@
 {{- end -}}
 <!-- CDN END -->
 
+<!-- 
 <div class="remove">
   <span>site_url= {{$site_url}}</span>
   <span>image_url = {{$img_destination}}</span>
-</div iv>
+</div> 
+-->
+
 
 <img src="{{ $img_destination | safeURL }}" alt="{{ .Text }}" {{ with .Title }}title="{{ . }}" {{ end }} />
 {{- /* Drop trailing newlines */ -}}
