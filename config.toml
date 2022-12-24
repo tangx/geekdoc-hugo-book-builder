@@ -1,8 +1,9 @@
-baseURL = "http://localhost"
-title = "Geekdocs"
+baseURL = "https://tangx.in/books/kustz/"
+title = "kustz 写你自己的工具"
 theme = "hugo-geekdoc"
 
 pluralizeListTitles = false
+defaultContentLanguage = "zh-cn"
 
 # Geekdoc required configuration
 pygmentsUseClasses = true
