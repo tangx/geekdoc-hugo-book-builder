@@ -4,3 +4,7 @@ serve:
 
 build:
 	hugo --gc --cleanDestinationDir
+
+clean:
+	rm -rf *
+	git checkout .
