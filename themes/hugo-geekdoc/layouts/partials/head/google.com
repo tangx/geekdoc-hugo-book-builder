@@ -1,0 +1,15 @@
+<!-- google ad: https://google.com/adsense -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5359126171348711"
+  crossorigin="anonymous"></script>
+
+
+
+<!-- Google tag/analytics (gtag.js): https://analytics.google.com -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-V3S2RT0KBC"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  gtag('js', new Date());
+
+  gtag('config', 'G-V3S2RT0KBC');
+</script>

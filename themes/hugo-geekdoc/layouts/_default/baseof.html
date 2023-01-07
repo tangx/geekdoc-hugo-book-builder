@@ -4,6 +4,12 @@
 
 <head>
   {{ partial "head/meta" . }}
+
+  <!-- 百度统计 https://tongji.baidu.com/ -->
+  {{ partial "head/baidu" . }}
+  <!--  谷歌广告 https://google.com -->
+  {{ partial "head/google" . }}
+
   <title>
     {{- if eq .Kind "home" -}}
     {{ .Site.Title }}
