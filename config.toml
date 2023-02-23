@@ -3,7 +3,6 @@ title = "kustz 写你自己的工具"
 theme = "hugo-geekdoc"
 
 pluralizeListTitles = false
-defaultContentLanguage = "zh-cn"
 
 # Geekdoc required configuration
 pygmentsUseClasses = true
@@ -23,9 +22,15 @@ enableRobotsTXT = true
     endLevel = 9
 
 [taxonomies]
-  tag = "tags"
+   tag = "tags"
 
 # 去除静态文件前缀
 # md 文件为了引用公共文件， 使用了项目级别绝对路径 /docs/static/logo.png
 [params.static_prefix]
   name = "/docs"
+
+[params.utteranc]
+    enable = true
+    repo = "owner/repo"    # 存储评论的Repo，格式为 owner/repo
+    issueTerm = "pathname"  #表示你选择以那种方式让github issue的评论和你的文章关联。
+    theme = "github-light" # 样式主题，有github-light和github-dark两种
