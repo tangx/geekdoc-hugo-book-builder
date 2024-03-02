@@ -1,0 +1,82 @@
+<!-- 使用方式
+    使用双花括号包裹， 例如 \{\{ xxxx \}}
+    1. <bilibili "https://www.bilibili.com/video/BV1Y84y1L7Nn/?p=11">
+    2. <bilibili src="https://www.bilibili.com/video/BV1Y84y1L7Nn/?p=11">
+-->
+
+<!--
+  // hugo function
+  https://gohugo.io/functions/urls/parse/
+-->
+
+<!--
+视频地址
+https://www.bilibili.com/video/BV1Y84y1L7Nn/?p=11&spm_id_from=333.880.my_history.page.click&vd_source=0259bb47833cfe6d7c4749c69a49a9d2
+播放地址:
+http://player.bilibili.com/player.html?bvid=BV1Wg411t7EE&page=1
+-->
+
+<!-- 语法规则
+    1. 匿名模式
+        <bilibili BV1Wg411t7EE 233>
+    2. 具名模式
+        <bilibili src="https://www.bilibili.com/video/BV1RK41117eY/?spm_id_from=333.1007.tianma.1-1-1.click" page="332">
+-->
+
+<!-- 获取第一个参数 作为视频地址 -->
+{{- $dest := ( .Get 0) -}}
+{{ $page := 1 }}
+{{ $begintime := 0 }}
+
+<!-- 如果是具名模式， 获取 src -->
+{{ if .IsNamedParams }}
+    {{ $dest = (.Get "src") }}
+{{ end }}
+
+
+
+<!-- 判断是否为 全路径， 是则获取视频ID -->
+{{ if (hasPrefix $dest "http" )}}
+    <!-- https://www.bilibili.com/video/BV1RK41117eY/?spm_id_from=333.1007.tianma.1-1-1.click -->
+    {{ $dest = (strings.TrimPrefix "http" $dest ) }}
+
+    <!-- 解析 URL -->
+    {{ $url := urls.Parse $dest }}
+
+    <!-- /video/BV1RK41117eY/ -->
+    {{ $dest = $url.Path }}
+
+    <!-- BV1RK41117eY -->
+    {{ $dest = (path.BaseName $dest) }}
+
+    <!-- 获取 page, 默认值为 1-->
+    {{ $p := $url.Query.Get "p" }}
+    {{ if $p }}
+        {{ $page = $p }}
+    {{ end }}
+    <!-- 自动播放时见， 秒 -->
+    {{ $t := $url.Query.Get "t" }}
+    {{ if $t }}
+        {{ $begintime = $t }}
+    {{ end }}
+{{ end }}
+
+
+
+<!-- 嵌入 bilibili 播放框 -->
+<div style="margin: 10px 0 20px 0;">
+  <!-- <h3>视频ID: {{ $dest }} - {{ $page }} </h3> -->
+  <div style="margin: 5px 0;">
+
+    <span>本视频一切权利归 <strong>bilibili</strong> 及 <strong>原作者所有</strong></span>
+
+    <span>如果觉得好， 请点击跳转到 <strong>bilibili</strong>给予支持</span>
+    <a href="https://www.bilibili.com/video/{{ $dest }}/?p={{$page}}">{{ $dest }}?p={{$page}}</a>
+  </div>
+
+  <div style="position:relative; padding-bottom:75%; width:100%; height:0">
+    <iframe src="//player.bilibili.com/player.html?&autoplay=0&bvid={{ $dest }}&page={{ $page }}" scrolling="no" border="0"
+      frameborder="no" framespacing="0" allowfullscreen="true" style="position:absolute; height: 100%; width: 100%;">
+    </iframe>
+  </div>
+</div>
